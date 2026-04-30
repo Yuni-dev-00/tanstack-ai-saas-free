@@ -1,0 +1,137 @@
+{
+  "common": {
+    "appName": "TanStack AI SaaS Starter",
+    "loading": "Loading…",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "cancel": "Cancel",
+    "save": "Save",
+    "continue": "Continue",
+    "upgrade": "Upgrade"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "docs": "Docs",
+    "github": "GitHub"
+  },
+  "hero": {
+    "tag": "Open-source AI SaaS starter",
+    "headline": "Ship your AI product on Cloudflare this weekend",
+    "subhead": "TanStack Start, strong types, fast edge delivery, auth, and a clean foundation you can fork and ship.",
+    "ctaPrimary": "Start building",
+    "ctaSecondary": "View source"
+  },
+  "auth": {
+    "signInTitle": "Sign in to your account",
+    "signUpTitle": "Create your account",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Your password",
+    "google": "Continue with Google",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "verifyEmailNotice": "We sent you a verification email. Click the link to activate your account.",
+    "signInSuccess": "Signed in. This window will close automatically.",
+    "resetPassword": "Forgot password?"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "notFound": "Page not found.",
+    "unauthorized": "Please sign in to continue.",
+    "notAuthorized": "You don't have access to this resource.",
+    "jobNotFound": "This job no longer exists."
+  },
+  "seo": {
+    "homeTitle": "Type-safe TanStack Start starter for AI SaaS"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "goBack": "Go Back",
+    "home": "Home",
+    "helpText": "Try checking the URL or use the search functionality"
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "subtitle": "We encountered an unexpected error. Please try again.",
+    "tryAgain": "Try Again",
+    "goHome": "Go to Home",
+    "goBack": "Go Back",
+    "helpText": "If this error persists, please report it to our support team.",
+    "reportError": "Report Error"
+  },
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "builtWith": "Built with TanStack Start",
+    "copyright": "© {year} TanStack. MIT Licensed."
+  },
+  "Landing": {
+    "Testimonials": {
+      "title": "What builders like about it",
+      "subtitle": "A clean foundation for shipping products faster",
+      "items": [
+        { "name": "Alex Chen", "role": "Full-Stack Developer", "quote": "The stack is clean, type-safe, and easy to extend without fighting the framework." },
+        { "name": "Sarah Kim", "role": "Product Designer", "quote": "The pages feel fast and polished from day one, which makes the product feel more complete." },
+        { "name": "Marco Li", "role": "Indie Hacker", "quote": "It removes a lot of the boilerplate I usually rebuild before I can launch." }
+      ]
+    },
+    "UseCases": {
+      "title": "Built for real products",
+      "items": [
+        { "title": "AI Products", "description": "A strong base for tools that need auth, fast UI, and a straightforward production setup." },
+        { "title": "Dashboard SaaS", "description": "Works well for data-heavy products that need structured routing and a smooth user experience." },
+        { "title": "Global Apps", "description": "Edge delivery and a lean stack help the app feel fast across regions." }
+      ]
+    },
+    "FAQ": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        { "q": "What is this starter for?", "a": "It is for founders and developers who want a fast, type-safe starting point for an AI SaaS or similar product." },
+        { "q": "Why TanStack Start?", "a": "It gives you strong routing and app structure while staying lightweight and predictable." },
+        { "q": "Can I use it for production?", "a": "Yes. It is designed as a commercial-ready foundation, not just a demo." },
+        { "q": "What do I get out of the box?", "a": "Auth, a landing page, SEO basics, i18n, and a clean app shell you can extend." }
+      ]
+    },
+    "CTA": {
+      "title": "Ready to start shipping?",
+      "subtitle": "Use the starter as the base for your next AI product.",
+      "button": "Get started"
+    },
+    "Hero": {
+      "badge": "Built with TanStack Start and Cloudflare Workers",
+      "title": "TanStack AI SaaS",
+      "titleAccent": "Starter",
+      "description": "A fast, type-safe, edge-first foundation for building and shipping AI SaaS products.",
+      "cta": "Explore features",
+      "github": "View on GitHub",
+      "trust": "Made for builders who care about speed and structure"
+    },
+    "Features": {
+      "title": "Everything you need to start clean",
+      "subtitle": "A focused stack that stays small, fast, and easy to extend",
+      "items": [
+        { "key": "router", "title": "TanStack Router", "description": "Type-safe routing with clear nesting and predictable navigation.", "badge": "Routing" },
+        { "key": "query", "title": "TanStack Query", "description": "Efficient data fetching and server-state management.", "badge": "Data" },
+        { "key": "react", "title": "React 19", "description": "Modern React with the latest rendering and composition patterns.", "badge": "UI" },
+        { "key": "vite", "title": "Vite", "description": "Fast local development and lightweight builds.", "badge": "Build" },
+        { "key": "typescript", "title": "TypeScript", "description": "Strong types to keep the codebase predictable as it grows.", "badge": "Types" },
+        { "key": "tailwind", "title": "Tailwind CSS v4", "description": "Utility-first styling with a small, practical design system.", "badge": "Styles" },
+        { "key": "ssr", "title": "SSR Ready", "description": "Server rendering support for fast initial loads and better SEO.", "badge": "Performance" },
+        { "key": "shadcn", "title": "Shadcn/UI", "description": "Accessible components that are easy to adapt to your brand.", "badge": "Components" }
+      ]
+    },
+    "CookieConsent": {
+      "message": "We use cookies to improve your experience. By continuing, you agree to our use of cookies.",
+      "accept": "Accept",
+      "decline": "Decline"
+    },
+    "LanguageDetection": {
+      "switchTo": "Switch to",
+      "switchToLocale": "Switch to {locale}?",
+      "switch": "Switch",
+      "dismiss": "Dismiss"
+    }
+  }
+}

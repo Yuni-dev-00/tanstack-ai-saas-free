@@ -1,0 +1,73 @@
+# AI SaaS Base Template — local dev environment template
+#
+# Usage:
+#   cp .dev.vars.example .dev.vars
+# then fill in real values. `.dev.vars` is gitignored.
+#
+# For production, every value here (except `APP_URL`) MUST be set via:
+#   echo "<value>" | npx wrangler secret put <KEY>
+#
+# See docs/plans/2026-04-23-ai-saas-base-template.md §Phase 0 for context.
+
+# --- Core ---
+APP_URL=http://localhost:3000
+# openssl rand -base64 32
+BETTER_AUTH_SECRET=generate_via_openssl_rand_base64_32
+BETTER_AUTH_URL=http://localhost:3000
+
+# --- Database (Neon Postgres) ---
+# Create the project under support@<your-domain> (NOT shared yuni.aigc account).
+# Pooled connection (recommended for CF Workers globalThis Pool pattern).
+DATABASE_URL=postgresql://user:pass@ep-xxx-pooler.us-east-2.aws.neon.tech/db?sslmode=require
+
+# --- OAuth providers ---
+# Google Cloud console → OAuth 2.0 Client ID
+# Authorized redirect URIs must include:
+#   http://localhost:3000/api/auth/callback/google
+#   https://<worker-name>.<subdomain>.workers.dev/api/auth/callback/google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# --- Email (Resend) ---
+RESEND_API_KEY=
+EMAIL_FROM=no-reply@example.com
+
+# --- Stripe (test mode until custom domain is registered) ---
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_PRICE_BASIC=price_...
+STRIPE_PRICE_PRO=price_...
+STRIPE_PRICE_CREDITS_100=price_...
+STRIPE_PRICE_CREDITS_500=price_...
+
+# --- Cloudflare R2 (S3 API) ---
+R2_ACCOUNT_ID=1e033c967e83673135a4dfee2cebfccc
+R2_ACCESS_KEY_ID=
+R2_SECRET_ACCESS_KEY=
+R2_BUCKET=tanstack-cf-test-assets
+R2_PUBLIC_BASE=https://assets.example.com
+
+# --- AI providers ---
+REPLICATE_API_TOKEN=
+FAL_KEY=
+KIE_API_KEY=
+EVOLINK_API_KEY=
+
+# Unguessable secret used in webhook callback URL paths.
+# Rotate by (1) generating new _CURRENT, (2) moving old _CURRENT to _LEGACY,
+# (3) waiting 24h for in-flight jobs to drain, (4) deleting _LEGACY.
+# Generate via: openssl rand -hex 32
+AI_WEBHOOK_SECRET_CURRENT=generate_via_openssl_rand_hex_32
+AI_WEBHOOK_SECRET_LEGACY=
+
+# --- Monitoring ---
+# GlitchTip DSN from errors.ai-yuni.com — see memory reference_glitchtip_api.md
+SENTRY_DSN=
+PLAUSIBLE_DOMAIN=tanstack-cf-test-linksee.yuni-aigc.workers.dev
+PLAUSIBLE_SCRIPT_URL=https://plausible.ai-yuni.com/js/script.js
+# Compute via: curl -s "$PLAUSIBLE_SCRIPT_URL" | openssl dgst -sha384 -binary | openssl base64 -A
+PLAUSIBLE_SCRIPT_SRI=
+
+# --- Build-injected (set by CI; leave empty for local dev) ---
+APP_VERSION=
+GIT_COMMIT=

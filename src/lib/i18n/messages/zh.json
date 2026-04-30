@@ -1,0 +1,137 @@
+{
+  "common": {
+    "appName": "TanStack AI SaaS Starter",
+    "loading": "加载中…",
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出登录",
+    "cancel": "取消",
+    "save": "保存",
+    "continue": "继续",
+    "upgrade": "升级"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "控制台",
+    "docs": "文档",
+    "github": "GitHub"
+  },
+  "hero": {
+    "tag": "开源 AI SaaS 启动器",
+    "headline": "周末就能上线你的 AI 产品",
+    "subhead": "TanStack Start、强类型、边缘部署、认证和干净的项目底座，fork 之后就能继续做自己的产品。",
+    "ctaPrimary": "开始搭建",
+    "ctaSecondary": "查看源码"
+  },
+  "auth": {
+    "signInTitle": "登录你的账户",
+    "signUpTitle": "创建账户",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "你的密码",
+    "google": "使用 Google 继续",
+    "noAccount": "还没有账户？",
+    "hasAccount": "已有账户？",
+    "verifyEmailNotice": "我们已发送验证邮件，请点击邮件中的链接激活账户。",
+    "signInSuccess": "登录成功，窗口将自动关闭。",
+    "resetPassword": "忘记密码？"
+  },
+  "errors": {
+    "generic": "出了点问题，请重试。",
+    "notFound": "页面未找到。",
+    "unauthorized": "请先登录。",
+    "notAuthorized": "没有访问该资源的权限。",
+    "jobNotFound": "该任务已不存在。"
+  },
+  "seo": {
+    "homeTitle": "面向 AI SaaS 的 TanStack Start 强类型启动器"
+  },
+  "notFound": {
+    "title": "页面未找到",
+    "description": "您访问的页面不存在或已被移动。",
+    "goBack": "返回",
+    "home": "首页",
+    "helpText": "请检查 URL 或使用搜索功能"
+  },
+  "errorBoundary": {
+    "title": "出错了",
+    "subtitle": "遇到意外错误，请重试。",
+    "tryAgain": "重试",
+    "goHome": "返回首页",
+    "goBack": "返回上页",
+    "helpText": "如果问题持续存在，请联系我们的支持团队。",
+    "reportError": "报告错误"
+  },
+  "footer": {
+    "privacy": "隐私政策",
+    "terms": "服务条款",
+    "builtWith": "基于 TanStack Start 构建",
+    "copyright": "© {year} TanStack. MIT 许可证。"
+  },
+  "Landing": {
+    "Testimonials": {
+      "title": "使用者怎么说",
+      "subtitle": "适合想更快交付产品的开发者",
+      "items": [
+        { "name": "Alex Chen", "role": "全栈开发者", "quote": "代码结构很清晰，类型安全也很好，扩展时不会跟框架打架。" },
+        { "name": "Sarah Kim", "role": "产品设计师", "quote": "页面打开很快，整体体验一上来就更像成品。" },
+        { "name": "Marco Li", "role": "独立开发者", "quote": "省掉了我通常要自己重建的很多基础工作。" }
+      ]
+    },
+    "UseCases": {
+      "title": "适合真实产品",
+      "items": [
+        { "title": "AI 产品", "description": "适合作为需要登录、快速 UI 和清晰生产结构的工具底座。" },
+        { "title": "数据看板 SaaS", "description": "适合需要复杂路由和顺滑交互的数据型产品。" },
+        { "title": "全球应用", "description": "边缘交付和轻量栈让全球访问体验更快。" }
+      ]
+    },
+    "FAQ": {
+      "title": "常见问题",
+      "items": [
+        { "q": "这个启动器适合做什么？", "a": "适合想快速搭建 AI SaaS 或类似产品的创始人和开发者。" },
+        { "q": "为什么选 TanStack Start？", "a": "它提供强类型路由和清晰的应用结构，同时保持轻量和可预测。" },
+        { "q": "可以直接用于生产吗？", "a": "可以。它是面向商业化交付的底座，不只是 demo。" },
+        { "q": "开箱就有什么？", "a": "认证、首页、SEO 基础、i18n 和一个干净的应用骨架。" }
+      ]
+    },
+    "CTA": {
+      "title": "准备开始了吗？",
+      "subtitle": "把它作为你下一个 AI 产品的基础。",
+      "button": "开始使用"
+    },
+    "Hero": {
+      "badge": "基于 TanStack Start 和 Cloudflare Workers 构建",
+      "title": "TanStack AI SaaS",
+      "titleAccent": "启动器",
+      "description": "一个快速、强类型、边缘优先的 AI SaaS 开发底座。",
+      "cta": "查看功能",
+      "github": "查看源码",
+      "trust": "为重视速度与结构的开发者而做"
+    },
+    "Features": {
+      "title": "从干净的基础开始",
+      "subtitle": "一个小而精的栈，保持快速，也容易扩展",
+      "items": [
+        { "key": "router", "title": "TanStack Router", "description": "强类型路由，嵌套清晰，导航可预测。", "badge": "路由" },
+        { "key": "query", "title": "TanStack Query", "description": "高效的数据获取与服务端状态管理。", "badge": "数据" },
+        { "key": "react", "title": "React 19", "description": "现代 React，支持最新的渲染与组合模式。", "badge": "界面" },
+        { "key": "vite", "title": "Vite", "description": "本地开发快，构建也轻量。", "badge": "构建" },
+        { "key": "typescript", "title": "TypeScript", "description": "强类型让代码库在增长时依然可控。", "badge": "类型" },
+        { "key": "tailwind", "title": "Tailwind CSS v4", "description": "实用优先的样式体系，简单直接。", "badge": "样式" },
+        { "key": "ssr", "title": "SSR 就绪", "description": "支持服务端渲染，首屏更快，SEO 更好。", "badge": "性能" },
+        { "key": "shadcn", "title": "Shadcn/UI", "description": "无障碍组件，方便按品牌继续定制。", "badge": "组件" }
+      ]
+    },
+    "CookieConsent": {
+      "message": "我们使用 Cookie 来改善您的体验。继续使用即表示您同意我们使用 Cookie。",
+      "accept": "接受",
+      "decline": "拒绝"
+    },
+    "LanguageDetection": {
+      "switchTo": "切换到",
+      "switchToLocale": "切换到 {locale}？",
+      "switch": "切换",
+      "dismiss": "忽略"
+    }
+  }
+}

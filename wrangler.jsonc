@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tanstack-ai-saas-free",
+  "account_id": "1e033c967e83673135a4dfee2cebfccc",
+  "compatibility_date": "2026-04-23",
+  // no_handle_cross_request_promise_resolution: required for sharing the
+  // Neon Pool across requests via globalThis cache (see src/db/client.ts).
+  // Neon driver's query callbacks otherwise trip CF Workers' strict per-
+  // request promise isolation and sporadically 500.
+  "compatibility_flags": ["nodejs_compat", "no_handle_cross_request_promise_resolution"],
+  "main": "./src/server.ts",
+  "observability": { "enabled": true },
+  "r2_buckets": [
+    {
+      "binding": "ASSETS_BUCKET",
+      "bucket_name": "tanstack-cf-test-assets",
+    },
+  ],
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "a7538df0d5d94f54915731be848183cb",
+    },
+  ],
+  "vars": {
+    "APP_URL": "https://example.com",
+  },
+  "triggers": { "crons": ["*/2 * * * *"] },
+}
