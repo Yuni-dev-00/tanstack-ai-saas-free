@@ -1,4 +1,5 @@
 import { betterAuth, type BetterAuthPlugin } from "better-auth";
+import { APIError } from "better-auth/api";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { passkey } from "@better-auth/passkey";
 import { magicLink } from "better-auth/plugins/magic-link";
@@ -10,6 +11,12 @@ import { oneTap, captcha } from "better-auth/plugins";
 import { sendEmail, type EmailEnv } from "@/lib/email/client";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import type { WorkerEnv } from "@/lib/env";
+import { consume, extractClientIp, RateLimitError } from "@/lib/rate-limit";
+import {
+  isBlockedEmailDomain,
+  SIGNUP_IP_DEFAULT_LIMIT,
+  SIGNUP_IP_WINDOW_SEC,
+} from "@/lib/signup-guard";
 import { createDb, resolveConnectionString, type DB } from "../db/client";
 
 // Runtime-only module: factory that creates a per-request BetterAuth
@@ -42,6 +49,9 @@ export interface CreateAuthOptions {
   // configured. All optional — none is required for sign-in/sign-up to
   // function. The unset state is the documented "feature off" default.
   turnstile?: { siteKey: string; secretKey: string };
+  // Max user creations per client IP per 24h (anti signup abuse).
+  // undefined = SIGNUP_IP_DEFAULT_LIMIT; 0 = cap disabled.
+  signupIpLimit?: number;
   appUrl?: string;
 }
 
@@ -189,6 +199,63 @@ export function createAuthInstance(db: DB, opts: CreateAuthOptions) {
       },
     },
     plugins: [passkey(), ...optionalPlugins],
+    // Deployments often sit behind a proxy chain (e.g. Cloudflare →
+    // reverse proxy). Proxies commonly rewrite x-forwarded-for to their
+    // immediate peer, so Better Auth's default header order records the
+    // edge node's IP on every session — useless for abuse forensics.
+    // cf-connecting-ip carries the real client IP end-to-end;
+    // x-forwarded-for stays as the local-dev / non-CF fallback.
+    // Priority matches extractClientIp in rate-limit.ts.
+    advanced: {
+      ipAddress: {
+        ipAddressHeaders: ["cf-connecting-ip", "x-forwarded-for"],
+      },
+    },
+    // Anti-abuse gate, fires before ANY user row is created (email,
+    // Google, passkey, anonymous): disposable-email domains are
+    // rejected, and user creations are capped per client IP per 24h
+    // via the shared rate-limit table. The IP check is skipped when
+    // the IP can't be determined ("unknown") so local dev and unit
+    // tests never share one global bucket.
+    databaseHooks: {
+      user: {
+        create: {
+          before: async (
+            user: { email?: string; isAnonymous?: boolean },
+            ctx,
+          ) => {
+            if (!user.isAnonymous && user.email && isBlockedEmailDomain(user.email)) {
+              throw new APIError("BAD_REQUEST", {
+                message:
+                  "Disposable email addresses are not supported. Please sign up with a permanent email.",
+              });
+            }
+            const limit = opts.signupIpLimit ?? SIGNUP_IP_DEFAULT_LIMIT;
+            const headers = ctx?.request?.headers ?? ctx?.headers;
+            if (limit > 0 && headers) {
+              const ip = extractClientIp(headers);
+              if (ip !== "unknown") {
+                try {
+                  await consume(db, {
+                    key: `signup-ip:${ip}`,
+                    budget: limit,
+                    windowSec: SIGNUP_IP_WINDOW_SEC,
+                  });
+                } catch (err) {
+                  if (err instanceof RateLimitError) {
+                    throw new APIError("TOO_MANY_REQUESTS", {
+                      message:
+                        "Too many accounts have been created from this network. Please try again later.",
+                    });
+                  }
+                  throw err;
+                }
+              }
+            }
+          },
+        },
+      },
+    },
     // 7-day expiry keeps the session short-lived for a public starter.
     // updateAge stays at 24h so active users get a rolling refresh.
     session: {
@@ -218,6 +285,13 @@ export function buildAuthOptions(env: WorkerEnv): CreateAuthOptions {
     env.TURNSTILE_SITE_KEY && env.TURNSTILE_SECRET_KEY
       ? { siteKey: env.TURNSTILE_SITE_KEY, secretKey: env.TURNSTILE_SECRET_KEY }
       : undefined;
+  // SIGNUP_IP_LIMIT: positive integer = cap, "0" = disabled, anything
+  // else (unset / garbage) = undefined → SIGNUP_IP_DEFAULT_LIMIT.
+  const rawIpLimit = Number(env.SIGNUP_IP_LIMIT);
+  const signupIpLimit =
+    env.SIGNUP_IP_LIMIT !== undefined && Number.isInteger(rawIpLimit) && rawIpLimit >= 0
+      ? rawIpLimit
+      : undefined;
   return {
     secret: env.BETTER_AUTH_SECRET,
     baseURL: env.BETTER_AUTH_URL ?? env.APP_URL,
@@ -229,6 +303,7 @@ export function buildAuthOptions(env: WorkerEnv): CreateAuthOptions {
       EMAIL_REPLY_TO: env.EMAIL_REPLY_TO,
     },
     turnstile,
+    signupIpLimit,
     appUrl: env.APP_URL,
   };
 }

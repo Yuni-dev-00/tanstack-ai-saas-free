@@ -120,10 +120,11 @@ async function consumePostgres(
 // (direct curl to the Worker's workers.dev URL still has cf-connecting-ip
 // set by the edge; local `pnpm dev` will only have x-forwarded-for or
 // nothing, which falls through to "unknown").
-export function extractClientIp(request: Request): string {
-  const cfIp = request.headers.get("cf-connecting-ip");
+export function extractClientIp(source: Request | Headers): string {
+  const headers = source instanceof Headers ? source : source.headers;
+  const cfIp = headers.get("cf-connecting-ip");
   if (cfIp) return cfIp.trim();
-  const fwd = request.headers.get("x-forwarded-for");
+  const fwd = headers.get("x-forwarded-for");
   if (fwd) {
     const first = fwd.split(",")[0]?.trim();
     if (first) return first;
@@ -134,7 +135,9 @@ export function extractClientIp(request: Request): string {
   // it avoids throwing on missing headers while still providing a backstop.
   // In production all traffic goes through CF so cf-connecting-ip is always
   // set. Log the fallback so it's visible in dev/test environments.
-  log("warn", "rate-limit.ip_unknown", { url: request.url });
+  log("warn", "rate-limit.ip_unknown", {
+    url: source instanceof Headers ? "(headers-only)" : source.url,
+  });
   return "unknown";
 }
 

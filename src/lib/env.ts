@@ -40,6 +40,10 @@ export const envSchema = z.object({
   TURNSTILE_SITE_KEY: z.string().optional(),
   TURNSTILE_SECRET_KEY: z.string().optional(),
 
+  // Max user creations per client IP per 24h (anti signup abuse).
+  // Unset = default (3, see signup-guard.ts); "0" disables.
+  SIGNUP_IP_LIMIT: z.string().optional(),
+
   // PostHog product analytics — optional. We keep Plausible as the
   // primary pageview tracker (lightweight, self-hosted, EU-friendly)
   // and bolt PostHog on for funnels + session replay when this is set.
